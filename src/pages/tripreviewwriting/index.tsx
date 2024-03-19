@@ -15,7 +15,7 @@ import {
 import "swiper/css";
 import "swiper/css/pagination";
 
-function TripReviewWriting() {
+function index() {
   SwiperCore.use([Pagination]);
   const { userSession, setUserSession } = useSessionStore();
   const { userSessionId, setUserSessionId } = useUserSessionIdStore();
@@ -214,4 +214,4 @@ function TripReviewWriting() {
   );
 }
 
-export default TripReviewWriting;
+export default index;
