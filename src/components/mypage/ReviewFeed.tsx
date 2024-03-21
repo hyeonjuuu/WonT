@@ -1,4 +1,5 @@
 import { ReviewDataTypes } from "@/types/ReviewDataTypes";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 interface TripReviewFeedProps {
@@ -12,6 +13,11 @@ function ReviewFeed({ reviewData }: TripReviewFeedProps) {
     console.log(reviewData);
   }, []);
 
+  const router = useRouter();
+  const handleReviewDetail = (e: React.MouseEvent, id: Number) => {
+    router.push(`/tripreviewdetail/${id}`);
+  };
+
   return (
     <li className="w-full items-center flex flex-col h-fit bg-white justify-center">
       {/* <Image
@@ -19,10 +25,7 @@ function ReviewFeed({ reviewData }: TripReviewFeedProps) {
         alt=""
         className="w-100% object-cover"
       /> */}
-      <a
-        href={`/tripreviewdetail/${reviewData.id}`}
-        className="w-100% w-full items-center flex flex-col"
-      >
+      <button onClick={(e) => handleReviewDetail(e, reviewData.id)}>
         <img
           src={Array.from(reviewData.review_image)[0]}
           alt=""
@@ -32,7 +35,7 @@ function ReviewFeed({ reviewData }: TripReviewFeedProps) {
         <span className="mb-10 font-semibold text-[16px] text-contentSecondary">
           서울 여행
         </span>
-      </a>
+      </button>
     </li>
   );
 }

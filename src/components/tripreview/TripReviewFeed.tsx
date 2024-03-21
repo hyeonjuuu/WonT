@@ -6,8 +6,6 @@ interface TripReviewFeedProps {
 }
 
 function TripReviewFeed({ reviewData }: TripReviewFeedProps) {
-  console.log(reviewData);
-
   return (
     <a href="" className="flex flex-col w-100%  border-[#EDF2F2] border-[1px]">
       <img
