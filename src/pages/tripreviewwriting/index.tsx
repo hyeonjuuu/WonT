@@ -7,7 +7,11 @@ import supabase from "@/lib/supabase/supabase";
 import SwiperCore from "swiper";
 import { Pagination } from "swiper/modules";
 import { useUploadImage } from "@/utils/uploadReviewImage";
-import { AiOutlineSearch } from "react-icons/ai";
+import ModalTripDate from "@/components/tripreviewwriting/ModalTripDate";
+import calendarIcon from "/public/svg/calendar-selected.svg";
+import Image from "next/image";
+import { useModalStateStore } from "@/store/useModalStateStore";
+import { DatesStore } from "@/store/DatesStore";
 import {
   useSessionStore,
   useUserSessionIdStore,
@@ -15,13 +19,6 @@ import {
 
 import "swiper/css";
 import "swiper/css/pagination";
-
-import { toast } from "react-toastify";
-import { DatesStore } from "@/store/DatesStore";
-import { SelectPlacesStore } from "@/store/PlacesStore";
-import { SelectAccommodationsStore } from "@/store/AccommodationsStore";
-import { getTripDateKo } from "@/utils/getTripDate";
-import ModalTripDate from "@/components/tripreviewwriting/modalTripDate";
 
 function index() {
   SwiperCore.use([Pagination]);
@@ -31,9 +28,11 @@ function index() {
   const [title, setTitle] = useState("");
   const [uploadImage, setUploadImage]: any = useState([]);
   const [imageSrc, setImageSrc]: any = useState([]);
+  const { tripDates } = DatesStore();
 
   const swiperRef = useRef<SwiperCore>();
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
+  const { showModal, setShowModal } = useModalStateStore();
 
   console.log(title);
 
@@ -159,9 +158,7 @@ function index() {
             <input
               type="file"
               id="input-file"
-              // className="w-full h-full text-center "
               className="hidden"
-              // style={{ display: "none" }}
               accept="image/*"
               multiple
               onChange={(e) => handleUpload(e)}
@@ -197,18 +194,39 @@ function index() {
             ))}
           </Swiper>
         </div>
-        <div className="row-span-2 shrink ">
+        <div className="row-span-2 grid grid-rows-3 border border-gray-300">
           <form action="">
             <input
               type="text"
               placeholder="제목을 입력하세요"
-              className="border border-gray-300 outline-none w-full p-3"
+              className="border-b border-gray-300 outline-none w-full p-3"
               onChange={titleHandler}
             />
           </form>
-          <div>
-            // 돋보기 모양 아이콘을 클릭하면 모달창이 뜬다.
-            <AiOutlineSearch onClick={clickModal} size={60}></AiOutlineSearch>
+          <div className="flex gap-2  border-t border-gray-300 relative">
+            <Image
+              width={100}
+              height={100}
+              src={calendarIcon}
+              alt="캘린더 아이콘"
+              className="w-6 h-6 "
+              onClick={clickModal}
+            />
+
+            <span
+              className={
+                tripDates?.length === 0
+                  ? "text-contentSecondary"
+                  : `text-primary`
+              }
+            >
+              {/* {tripDates?.length === 0
+                ? "날짜를 선택하세요."
+                : `${tripDates[0]} - ${tripDates[tripDates.length - 1]}`} */}
+              {tripDates !== null && tripDates?.length > 0
+                ? `${tripDates[0]} - ${tripDates[tripDates.length - 1]} `
+                : "날짜를 선택하세요."}
+            </span>
           </div>
           {showModal && <ModalTripDate clickModal={clickModal} />}
 
