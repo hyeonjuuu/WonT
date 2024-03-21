@@ -7,6 +7,7 @@ import supabase from "@/lib/supabase/supabase";
 import SwiperCore from "swiper";
 import { Pagination } from "swiper/modules";
 import { useUploadImage } from "@/utils/uploadReviewImage";
+import { AiOutlineSearch } from "react-icons/ai";
 import {
   useSessionStore,
   useUserSessionIdStore,
@@ -14,6 +15,13 @@ import {
 
 import "swiper/css";
 import "swiper/css/pagination";
+
+import { toast } from "react-toastify";
+import { DatesStore } from "@/store/DatesStore";
+import { SelectPlacesStore } from "@/store/PlacesStore";
+import { SelectAccommodationsStore } from "@/store/AccommodationsStore";
+import { getTripDateKo } from "@/utils/getTripDate";
+import ModalTripDate from "@/components/tripreviewwriting/modalTripDate";
 
 function index() {
   SwiperCore.use([Pagination]);
@@ -23,7 +31,9 @@ function index() {
   const [title, setTitle] = useState("");
   const [uploadImage, setUploadImage]: any = useState([]);
   const [imageSrc, setImageSrc]: any = useState([]);
+
   const swiperRef = useRef<SwiperCore>();
+  const [showModal, setShowModal] = useState(false);
 
   console.log(title);
 
@@ -126,6 +136,8 @@ function index() {
     }
   };
 
+  const clickModal = () => setShowModal(!showModal);
+
   return (
     <TripReviewWritingLayout>
       <div className="flex flex-col lg:grid sm:grid-cols-2 mx-9 h-[90%]">
@@ -194,6 +206,12 @@ function index() {
               onChange={titleHandler}
             />
           </form>
+          <div>
+            // 돋보기 모양 아이콘을 클릭하면 모달창이 뜬다.
+            <AiOutlineSearch onClick={clickModal} size={60}></AiOutlineSearch>
+          </div>
+          {showModal && <ModalTripDate clickModal={clickModal} />}
+
           <textarea
             name=""
             id=""

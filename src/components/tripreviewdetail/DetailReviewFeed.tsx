@@ -20,11 +20,6 @@ function DetailReviewFeed({ reviewData }: DetailReviewFeedProps) {
   if (reviewData) {
     return (
       <div className="flex flex-col gap-4">
-        {/* <Image
-          src={myPlanDefaultImage}
-          alt=""
-          className="aspect-square object-fill w-[560px]  mt-5 bg-red-200"
-        /> */}
         <Swiper
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
