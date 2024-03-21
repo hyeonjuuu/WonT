@@ -81,6 +81,8 @@ function TripEdit() {
           console.log(error);
         } else {
           alert("일정이 저장되었습니다.");
+          resetRegionName();
+          resetTripDates();
         }
       }
     } catch (error) {

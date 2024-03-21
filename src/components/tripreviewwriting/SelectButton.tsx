@@ -1,23 +1,28 @@
-import { useModalStateStore } from "@/store/useModalStateStore";
-import Link from "next/link";
-import { ToastContainer } from "react-toastify";
+import {
+  useDateModalStateStore,
+  useRegionModalStateStore,
+} from "@/store/useModalStateStore";
+import React from "react";
 
 type ButtonLargePropType = {
   isSelected?: boolean;
   href?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children?: React.ReactNode;
+  type: string;
 };
 
 const SelectButton = ({
   onClick,
   children = "선택 완료",
+  type,
 }: ButtonLargePropType) => {
-  const { showModal, setShowModal } = useModalStateStore();
+  const { showDateModal, setShowDateModal } = useDateModalStateStore();
+  const { showRegionModal, setShowRegionModal } = useRegionModalStateStore();
   const buttonClasses = "w-80 h-16 rounded-xl font-bold text-white";
 
   const handleModalState = () => {
-    setShowModal(false);
+    type === "date" ? setShowDateModal(false) : setShowRegionModal(false);
   };
 
   return (

@@ -9,8 +9,8 @@ import { Pagination } from "swiper/modules";
 import { useUploadImage } from "@/utils/uploadReviewImage";
 import ModalTripDate from "@/components/tripreviewwriting/ModalTripDate";
 import calendarIcon from "/public/svg/calendar-selected.svg";
+import regionIcon from "/public/svg/regionIcon-selected.svg";
 import Image from "next/image";
-import { useModalStateStore } from "@/store/useModalStateStore";
 import { DatesStore } from "@/store/DatesStore";
 import {
   useSessionStore,
@@ -19,6 +19,12 @@ import {
 
 import "swiper/css";
 import "swiper/css/pagination";
+import ModalTripRegion from "@/components/tripreviewwriting/ModalTripRegion";
+import {
+  useDateModalStateStore,
+  useRegionModalStateStore,
+} from "@/store/useModalStateStore";
+import { RegionStore } from "@/store/RegionStore";
 
 function index() {
   SwiperCore.use([Pagination]);
@@ -29,10 +35,10 @@ function index() {
   const [uploadImage, setUploadImage]: any = useState([]);
   const [imageSrc, setImageSrc]: any = useState([]);
   const { tripDates } = DatesStore();
-
+  const { selectedRegionName } = RegionStore();
   const swiperRef = useRef<SwiperCore>();
-  // const [showModal, setShowModal] = useState(false);
-  const { showModal, setShowModal } = useModalStateStore();
+  const { showDateModal, setShowDateModal } = useDateModalStateStore();
+  const { showRegionModal, setShowRegionModal } = useRegionModalStateStore();
 
   console.log(title);
 
@@ -135,7 +141,8 @@ function index() {
     }
   };
 
-  const clickModal = () => setShowModal(!showModal);
+  const clickDateModal = () => setShowDateModal(!showDateModal);
+  const clickRegionModal = () => setShowRegionModal(!showRegionModal);
 
   return (
     <TripReviewWritingLayout>
@@ -210,7 +217,7 @@ function index() {
               src={calendarIcon}
               alt="캘린더 아이콘"
               className="w-6 h-6 "
-              onClick={clickModal}
+              onClick={clickDateModal}
             />
 
             <span
@@ -220,28 +227,44 @@ function index() {
                   : `text-primary`
               }
             >
-              {/* {tripDates?.length === 0
-                ? "날짜를 선택하세요."
-                : `${tripDates[0]} - ${tripDates[tripDates.length - 1]}`} */}
               {tripDates !== null && tripDates?.length > 0
                 ? `${tripDates[0]} - ${tripDates[tripDates.length - 1]} `
                 : "날짜를 선택하세요."}
             </span>
           </div>
-          {showModal && <ModalTripDate clickModal={clickModal} />}
+          {showDateModal && <ModalTripDate clickModal={clickDateModal} />}
+
+          <div className="flex gap-2  border-t border-gray-300 relative">
+            <Image
+              width={100}
+              height={100}
+              src={regionIcon}
+              alt="지역 아이콘"
+              className="w-6 h-6 "
+              onClick={clickRegionModal}
+            />
+
+            <span>
+              {selectedRegionName !== null
+                ? selectedRegionName
+                : "지역을 선택해주세요."}
+            </span>
+          </div>
+          {showRegionModal && <ModalTripRegion clickModal={clickRegionModal} />}
 
           <textarea
             name=""
             id=""
+            placeholder="리뷰를 작성해주세요."
             cols={30}
             rows={10}
-            className="border border-gray-300 outline-none resize-none p-3 h-full w-full shrink"
+            className="border border-gray-300 outline-none resize-none p-3 h-full w-full grow"
             onChange={handleTextContents}
           ></textarea>
         </div>
         <button
           onClick={handleSubmit}
-          className="w-full bg-point text-white py-3 px-4 col-span-2 my-4 mb-10"
+          className="w-full bg-point text-white py-3 px-4 col-span-2 my-4 mb-10 rounded-sm"
         >
           리뷰 작성
         </button>

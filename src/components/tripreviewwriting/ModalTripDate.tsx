@@ -5,7 +5,6 @@ import { getTripDateKo } from "@/utils/getTripDate";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import SelectButton from "./SelectButton";
-import { useModalStateStore } from "@/store/useModalStateStore";
 
 const ModalTripDate = (props: { clickModal: any }) => {
   const { clickModal } = props;
@@ -25,14 +24,14 @@ const ModalTripDate = (props: { clickModal: any }) => {
   console.log(tripDates?.length);
 
   return (
-    <div onClick={clickModal} className="fixed ">
+    <div onClick={clickModal} className="fixed z-50">
       <div
         onClick={(e) => e.stopPropagation()}
-        className="absolute bg-[#f9fefe] border border-[#e8efef] flex flex-col justify-center "
+        className="absolute  bg-[#f9fefe] border border-[#e8efef] flex flex-col justify-center "
       >
         <TripCalendar />
         <TripDateInfo contents={selectDatesRangeText} />
-        <SelectButton />
+        <SelectButton type="date" />
       </div>
     </div>
   );

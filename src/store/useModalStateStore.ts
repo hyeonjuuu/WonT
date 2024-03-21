@@ -1,11 +1,24 @@
 import { create } from "zustand";
 
-type ModalStateStoreType = {
-  showModal: boolean;
-  setShowModal: (state: boolean) => void;
+type ModalDateStateStoreType = {
+  showDateModal: boolean;
+  setShowDateModal: (state: boolean) => void;
+};
+type ModalRegionStateStoreType = {
+  showRegionModal: boolean;
+  setShowRegionModal: (state: boolean) => void;
 };
 
-export const useModalStateStore = create<ModalStateStoreType>((set) => ({
-  showModal: false,
-  setShowModal: (state: boolean) => set({ showModal: state }),
-}));
+export const useDateModalStateStore = create<ModalDateStateStoreType>(
+  (set) => ({
+    showDateModal: false,
+    setShowDateModal: (state: boolean) => set({ showDateModal: state }),
+  }),
+);
+
+export const useRegionModalStateStore = create<ModalRegionStateStoreType>(
+  (set) => ({
+    showRegionModal: false,
+    setShowRegionModal: (state: boolean) => set({ showRegionModal: state }),
+  }),
+);
