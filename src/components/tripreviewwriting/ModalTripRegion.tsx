@@ -3,6 +3,7 @@ import SelectButton from "./SelectButton";
 import { RegionStore } from "@/store/RegionStore";
 import RegionItem from "../tripregion/RegionItem";
 import { TOUR_BASE_AREA } from "@/lib/tour/tour";
+import TripRegionItem from "./TripRegionItem";
 
 type RegionDataType = {
   rnum: number;
@@ -22,6 +23,7 @@ const ModalTripRegion = (props: { clickModal: any }) => {
       setRegionData(json.response.body.items.item);
     })();
   }, []);
+  console.log(selectedRegionName);
 
   return (
     <div onClick={clickModal}>
@@ -30,7 +32,7 @@ const ModalTripRegion = (props: { clickModal: any }) => {
           {regionData?.map((region: RegionDataType) => {
             0;
             return (
-              <RegionItem
+              <TripRegionItem
                 key={region.rnum}
                 regionCode={region.rnum - 1}
                 regionName={region.name}

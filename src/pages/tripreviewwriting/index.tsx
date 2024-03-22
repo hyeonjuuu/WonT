@@ -40,8 +40,6 @@ function index() {
   const { showDateModal, setShowDateModal } = useDateModalStateStore();
   const { showRegionModal, setShowRegionModal } = useRegionModalStateStore();
 
-  console.log(title);
-
   useEffect(() => {
     const getUserSession = async () => {
       const { data, error } = await supabase.auth.getSession();
@@ -118,6 +116,8 @@ function index() {
           review_image: uploadImagePaths || null,
           user_id: userSession?.user.id,
           title: title,
+          region: selectedRegionName,
+          trip_date: tripDates,
         },
       ]);
       if (textContents === "") {
@@ -201,16 +201,19 @@ function index() {
             ))}
           </Swiper>
         </div>
-        <div className="row-span-2 grid grid-rows-3 border border-gray-300">
-          <form action="">
+        <div className=" grid row-auto  border border-gray-300 ">
+          <form
+            action=""
+            className="border-b border-gray-300 outline-none w-full p-3 shrink box-contents grid-flow-row auto-rows-min"
+          >
             <input
               type="text"
               placeholder="제목을 입력하세요"
-              className="border-b border-gray-300 outline-none w-full p-3"
+              className="outline-none w-full p-3"
               onChange={titleHandler}
             />
           </form>
-          <div className="flex gap-2  border-t border-gray-300 relative">
+          <div className="flex ml-4 items-center gap-2  border-t border-gray-300 relative">
             <Image
               width={100}
               height={100}
@@ -234,7 +237,7 @@ function index() {
           </div>
           {showDateModal && <ModalTripDate clickModal={clickDateModal} />}
 
-          <div className="flex gap-2  border-t border-gray-300 relative">
+          <div className="flex ml-4 items-center gap-2  border-t border-gray-300 relative">
             <Image
               width={100}
               height={100}
@@ -244,21 +247,26 @@ function index() {
               onClick={clickRegionModal}
             />
 
-            <span>
+            <span
+              className={
+                selectedRegionName === null
+                  ? `text-contentSecondary`
+                  : `text-primary`
+              }
+            >
               {selectedRegionName !== null
                 ? selectedRegionName
                 : "지역을 선택해주세요."}
             </span>
           </div>
           {showRegionModal && <ModalTripRegion clickModal={clickRegionModal} />}
-
           <textarea
             name=""
             id=""
             placeholder="리뷰를 작성해주세요."
             cols={30}
             rows={10}
-            className="border border-gray-300 outline-none resize-none p-3 h-full w-full grow"
+            className="border-t border-gray-300 outline-none resize-none p-3 h-full w-full grow row-span-2"
             onChange={handleTextContents}
           ></textarea>
         </div>

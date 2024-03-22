@@ -6,6 +6,8 @@ interface MyPageTitleProps {
 
 function MyPageTitle({ text }: MyPageTitleProps) {
   const { planData, setPlanData } = useFetchTripDataStore();
+  console.log(planData);
+
   return (
     <div className="flex gap-2">
       <span className="font-semibold">{text}</span>

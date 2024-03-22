@@ -25,7 +25,10 @@ function ReviewFeed({ reviewData }: TripReviewFeedProps) {
         alt=""
         className="w-100% object-cover"
       /> */}
-      <button onClick={(e) => handleReviewDetail(e, reviewData.id)}>
+      <button
+        onClick={(e) => handleReviewDetail(e, reviewData.id)}
+        className="bg-white flex flex-col items-center justify-center"
+      >
         <img
           src={Array.from(reviewData.review_image)[0]}
           alt=""
