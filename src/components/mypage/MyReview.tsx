@@ -1,12 +1,14 @@
 import MyPageTitle from "@/components/mypage/MyPageTitle";
 import ReviewFeed from "@/components/mypage/ReviewFeed";
 import supabase from "@/lib/supabase/supabase";
+import { useReviewStore } from "@/store/useReviewStore";
 import { useSessionStore } from "@/store/useSessionStore";
 import { useEffect, useState } from "react";
 
 function MyReview() {
   const [review, setReview] = useState<any[] | null>();
   const { userSession, setUserSession } = useSessionStore();
+  const { reviewData, setReviewData } = useReviewStore();
 
   useEffect(() => {
     const fetchingReviewData = async () => {
@@ -15,8 +17,8 @@ function MyReview() {
         .select()
         .eq("user_id", userSession?.user.id)
         .order("created_at", { ascending: false });
-      console.log(data);
       setReview(data);
+      setReviewData(data);
       if (error) {
         console.error(error);
       }

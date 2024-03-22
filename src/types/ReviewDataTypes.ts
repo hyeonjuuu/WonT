@@ -7,4 +7,5 @@ export interface ReviewDataTypes {
   user_id: string;
   title: string;
   region?: string;
+  trip_date: string[];
 }
