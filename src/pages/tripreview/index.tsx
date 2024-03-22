@@ -16,8 +16,8 @@ function TripReview() {
         .from("reviews")
         .select()
         .order("created_at", { ascending: false });
-      console.log(data);
       setReview(data);
+      setReviewData(data);
       if (error) {
         console.error(error);
       }

@@ -25,6 +25,16 @@ import {
   useRegionModalStateStore,
 } from "@/store/useModalStateStore";
 import { RegionStore } from "@/store/RegionStore";
+import { useWriterStore } from "@/store/useWriterStore";
+
+interface UserDataItems {
+  avatar_url: string;
+  email: string;
+  full_name: string;
+  id: string;
+  nickname: string;
+  username: string;
+}
 
 function index() {
   SwiperCore.use([Pagination]);
@@ -39,6 +49,9 @@ function index() {
   const swiperRef = useRef<SwiperCore>();
   const { showDateModal, setShowDateModal } = useDateModalStateStore();
   const { showRegionModal, setShowRegionModal } = useRegionModalStateStore();
+  const [userData, setUserData] = useState<UserDataItems[] | null>();
+  // const [writer, setWriter] = useState();
+  const { writer, setWriter } = useWriterStore();
 
   useEffect(() => {
     const getUserSession = async () => {
@@ -46,8 +59,20 @@ function index() {
       setUserSession(data);
       setUserSessionId(data.session?.user.id);
     };
+
+    const fetchUesrData = async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select()
+        .eq("id", userSessionId)
+        .single();
+      setUserData(data);
+      setWriter(data?.nickname);
+    };
+
     getUserSession();
-  }, []);
+    fetchUesrData();
+  }, [userData, userSessionId, setUserData, setUserSession, setUserSessionId]);
 
   const titleHandler = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -118,6 +143,7 @@ function index() {
           title: title,
           region: selectedRegionName,
           trip_date: tripDates,
+          writer: writer,
         },
       ]);
       if (textContents === "") {

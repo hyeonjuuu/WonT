@@ -8,4 +8,5 @@ export interface ReviewDataTypes {
   title: string;
   region?: string;
   trip_date: string[];
+  writer?: string;
 }
