@@ -45,7 +45,7 @@ function DetailReviewFeed({ reviewData }: DetailReviewFeedProps) {
             {reviewData.title}
           </h3>
           <span className="font-light text-xs text-contentMuted">
-            24.01.02 - 24.01.22
+            {`${reviewData?.trip_date[0]} - ${reviewData?.trip_date[reviewData.trip_date.length - 1]}`}
           </span>
           <p className="text-contentMuted my-4">{reviewData.review_data}</p>
           <button className="text-primary underline my-2">더보기</button>

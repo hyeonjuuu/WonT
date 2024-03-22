@@ -1,5 +1,7 @@
+import AddPlanButton from "@/components/tripedit/AddPlanButton";
 import TripDays from "@/components/tripedit/TripDays";
 import TripEditMap from "@/components/tripedit/TripEditMap";
+import DetailPlace from "@/components/tripreviewdetail/DetailPlace";
 import DetailReviewFeed from "@/components/tripreviewdetail/DetailReviewFeed";
 import TripDetailMap from "@/components/tripreviewdetail/TripDetailMap";
 import TripReviewDetailLayout from "@/layout/tripreviewdetail/layout";
@@ -31,16 +33,18 @@ function index() {
     fetchingUserReviewData();
   }, [userReviewId]);
 
+  console.log(reviewData?.trip_date.map((item) => item));
+
   return (
     <TripReviewDetailLayout>
       <div className="w-[560px] mx-auto">
         <DetailReviewFeed reviewData={reviewData} />
-        <div>
+        <div className="relative">
           <TripDetailMap />
           <div className="w-full h-[80px] bg-contentSecondary flex justify-between items-center px-5">
             <div className="flex flex-col">
-              <span className="text-white">{reviewData?.review_data}</span>
-              <span className="text-white">{reviewData?.created_at}</span>
+              <span className="text-white">{reviewData?.region}</span>
+              <span className="text-white">{`${reviewData?.trip_date[0]} - ${reviewData?.trip_date[reviewData.trip_date.length - 1]}`}</span>
             </div>
             <button className="border-[1px] w-[56px] h-7 rounded-md border-contentMuted text-contentMuted text-sm">
               수정
@@ -48,7 +52,7 @@ function index() {
           </div>
           <section>
             <div className="mt-7 mb-10">
-              <TripDays />
+              <DetailPlace reviewData={reviewData} />
             </div>
           </section>
         </div>
