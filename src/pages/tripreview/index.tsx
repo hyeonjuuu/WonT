@@ -3,6 +3,7 @@ import TripReviewLayout from "@/layout/tripreview/layout";
 import supabase from "@/lib/supabase/supabase";
 import { useReviewStore } from "@/store/useReviewStore";
 import { ReviewDataTypes } from "@/types/ReviewDataTypes";
+import Router from "next/router";
 import { useEffect, useState } from "react";
 
 function TripReview() {
@@ -28,10 +29,16 @@ function TripReview() {
 
   return (
     <TripReviewLayout>
-      <div>
-        {/* <button className=" px-6 py-2 bg-primary text-white cursor-pointer w-8 h-5 rounded-md">
+      <div className="flex mb-5 flex-end justify-end mx-5">
+        <button
+          type="button"
+          onClick={() => Router.push(`/tripreviewwriting`)}
+          className="  bg-primary text-white cursor-pointer w-28 h-10 rounded-md"
+        >
           리뷰 작성
-        </button> */}
+        </button>
+      </div>
+      <div>
         <div className="flex flex-col mx-16 gap-5 lg:grid lg:grid-cols-4 lg:mx-16 md:grid-cols-3 md:mx-16 md:grid sm:grid sm:grid-cols-2 sm:mx-16">
           {review?.map((item) => <TripReviewFeed reviewData={item} />)}
         </div>

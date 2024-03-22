@@ -204,7 +204,7 @@ function index() {
         <div className=" grid row-auto  border border-gray-300 ">
           <form
             action=""
-            className="border-b border-gray-300 outline-none w-full p-3 shrink box-contents grid-flow-row auto-rows-min"
+            className="border-b border-gray-300 outline-none w-full flex items-center"
           >
             <input
               type="text"
@@ -213,7 +213,7 @@ function index() {
               onChange={titleHandler}
             />
           </form>
-          <div className="flex ml-4 items-center gap-2  border-t border-gray-300 relative">
+          <div className="flex px-4 items-center gap-2  border-gray-300 relative">
             <Image
               width={100}
               height={100}
@@ -237,7 +237,7 @@ function index() {
           </div>
           {showDateModal && <ModalTripDate clickModal={clickDateModal} />}
 
-          <div className="flex ml-4 items-center gap-2  border-t border-gray-300 relative">
+          <div className="flex  px-4 items-center gap-2  border-t border-gray-300 relative">
             <Image
               width={100}
               height={100}
