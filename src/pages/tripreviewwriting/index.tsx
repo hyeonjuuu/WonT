@@ -50,7 +50,6 @@ function index() {
   const { showDateModal, setShowDateModal } = useDateModalStateStore();
   const { showRegionModal, setShowRegionModal } = useRegionModalStateStore();
   const [userData, setUserData] = useState<UserDataItems[] | null>();
-  // const [writer, setWriter] = useState();
   const { writer, setWriter } = useWriterStore();
 
   useEffect(() => {

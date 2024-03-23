@@ -14,12 +14,6 @@ const ModalTripDate = (props: { clickModal: any }) => {
     ? `${tripDates[0]} ~ ${tripDates[tripDates.length - 1]}`
     : getTripDateKo(new Date());
 
-  // const inSelectedTripDates = () => {
-  //   toast.error("여행 일자를 선택해 주세요!", {
-  //     position: "top-center",
-  //     autoClose: 2500,
-  //   });
-  // };
   console.log(tripDates);
   console.log(tripDates?.length);
 
