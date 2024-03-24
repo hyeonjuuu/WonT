@@ -50,7 +50,7 @@ const BestTravels = () => {
             key={travel.id}
             className="border-8 hover:scale-110 transition mb-[20px]"
           >
-            <Link href={`/travel/${travel.id}`}>
+            <Link href={`/tripreviewdetail/${travel.id}`}>
               {/* <Image
                 src="/mypage/myReviewDefaultImage-1.jpg"
                 alt={travel.title}

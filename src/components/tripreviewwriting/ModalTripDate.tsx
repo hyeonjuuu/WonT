@@ -2,8 +2,6 @@ import { TripCalendar } from "@/components/tripdate/TripCalendar";
 import { TripDateInfo } from "@/components/tripdate/TripDateInfo";
 import { DatesStore } from "@/store/DatesStore";
 import { getTripDateKo } from "@/utils/getTripDate";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
 import SelectButton from "./SelectButton";
 
 const ModalTripDate = (props: { clickModal: any }) => {

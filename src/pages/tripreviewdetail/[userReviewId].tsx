@@ -8,6 +8,7 @@ import TripReviewDetailLayout from "@/layout/tripreviewdetail/layout";
 import supabase from "@/lib/supabase/supabase";
 import { useSessionStore } from "@/store/useSessionStore";
 import { ReviewDataTypes } from "@/types/ReviewDataTypes";
+import FunctionProgress from "@/utils/FunctionProgress";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
@@ -33,8 +34,6 @@ function index() {
     fetchingUserReviewData();
   }, [userReviewId]);
 
-  console.log(reviewData?.trip_date.map((item) => item));
-
   return (
     <TripReviewDetailLayout>
       <div className="w-[560px] mx-auto">
@@ -55,6 +54,10 @@ function index() {
               <DetailPlace reviewData={reviewData} />
             </div>
           </section>
+          <div className="absolute w-full top-0 bg-black/70 z-10 h-full flex justify-center items-center flex-col">
+            <FunctionProgress />
+            <span className="text-white">기능 구현 진행중 입니다.</span>
+          </div>
         </div>
       </div>
     </TripReviewDetailLayout>
