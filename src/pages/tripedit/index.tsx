@@ -21,9 +21,9 @@ function TripEdit() {
   const [userSessionId, setUserSessionId] = useState<string | undefined>();
   const { selectedPlan, setSelectedPlan } = SelectedPlanStore();
   const router = useRouter();
-  console.log("selectedPlan", selectedPlan);
-  // console.log("selectedPlaces", selectedPlaces);
-  // console.log("selectedAccommodations", selectedAccommodations);
+  console.log(tripDates);
+  console.log(selectedPlaces);
+  console.log(selectedAccommodations);
 
   //TODO@uniS2: 각 일자에 맞는 숙박 선택 정보 제공을 위한 storage 초기화
   // const clearAccommodationIdStorage = SelectAccommodationStore.persist.clearStorage;
@@ -74,6 +74,7 @@ function TripEdit() {
             places: selectedPlaces,
             accommodations: selectedAccommodations,
             plan: selectedPlan,
+            trip_date: tripDates,
           },
         ]);
         if (error) {
@@ -83,6 +84,7 @@ function TripEdit() {
           alert("일정이 저장되었습니다.");
           resetRegionName();
           resetTripDates();
+          router.reload();
         }
       }
     } catch (error) {
