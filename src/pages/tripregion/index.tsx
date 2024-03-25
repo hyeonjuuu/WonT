@@ -9,6 +9,7 @@ import RegionItem from "@/components/tripregion/RegionItem";
 import ButtonLarge from "@/components/common/ButtonLarge";
 import { TOUR_BASE_AREA } from "@/lib/tour/tour";
 import { RegionStore } from "@/store/RegionStore";
+import { RegionToggleStore } from "@/store/RegionToggleStore";
 import { debounce } from "@/utils/debounce";
 
 type RegionDataType = {
@@ -20,6 +21,8 @@ type RegionDataType = {
 const TripRegionPage = () => {
   const [regionData, setRegionData] = useState<RegionDataType[] | null>(null);
   const { selectedRegionName } = RegionStore();
+  const { toggleRegionName } = RegionToggleStore();
+  const [selectClass, setSelectClass] = useState("max-h-[58vh]");
 
   useEffect(() => {
     (async () => {
@@ -28,6 +31,15 @@ const TripRegionPage = () => {
       setRegionData(json.response.body.items.item);
     })();
   }, []);
+
+  useEffect(() => {
+    if (toggleRegionName.length) {
+      setSelectClass("max-h-[80vh]");
+    }
+    return () => {
+      setSelectClass("max-h-[58vh]");
+    };
+  }, [toggleRegionName]);
 
   // 검색 기능
   const [searchInput, setSearchInput] = useState("");
@@ -68,7 +80,9 @@ const TripRegionPage = () => {
             className="w-full p-3 text-sm font-light outline-none focus:text-content focus:font-medium"
           />
         </label>
-        <ul className="grid place-items-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 overflow-y-auto max-h-96">
+        <ul
+          className={`grid place-items-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 overflow-y-auto ${selectClass}`}
+        >
           {regionData
             ?.filter((r) =>
               r.name.toLowerCase().includes(debouncedSearch.toLowerCase()),

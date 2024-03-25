@@ -8,10 +8,10 @@ import { useState } from "react";
 import useSignInStore from "@/store/useSignInStore";
 import supabase from "@/lib/supabase/supabase";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const SignInPage: React.FC = () => {
   const router = useRouter();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const isAuthenticated = useSignInStore((state) => state.isAuthenticated);
@@ -43,7 +43,7 @@ const SignInPage: React.FC = () => {
         <div className="flex flex-col justify-center items-center gap-5">
           <Image
             src="/svg/logo.svg"
-            alt="wont 로고"
+            alt="원트 로고"
             width={150}
             height={50}
             priority
@@ -64,10 +64,10 @@ const SignInPage: React.FC = () => {
           />
           <SignButton text="로그인" onClick={handleLogin} />
           <SignBox />
-          <div className="w-[320px] flex items-center justify-center mt-[100px] mb-[30px]">
-            <div className="border-b border-gray-300 w-[90px] mr-2"></div>
+          <div className="w-[20rem] flex items-center justify-center mt-[6.25rem] mb-[1.875rem]">
+            <div className="border-b border-gray-300 w-[5.625rem] mr-2"></div>
             <div className="text-gray-600">SNS 간편 로그인</div>
-            <div className="border-b border-gray-300 w-[90px] ml-2"></div>
+            <div className="border-b border-gray-300 w-[5.625rem] ml-2"></div>
           </div>
           <SignSns />
         </div>

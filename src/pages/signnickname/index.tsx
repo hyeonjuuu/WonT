@@ -3,7 +3,8 @@ import NickNameLayout from "@/layout/signnickname/layout";
 import DefaultProfile from "@/components/mypage/DefaultProfile";
 import { useRouter } from "next/router";
 import supabase from "@/lib/supabase/supabase";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const SignNickName = () => {
   const router = useRouter();
   const [nickname, setNickname] = useState("");
@@ -63,8 +64,10 @@ const SignNickName = () => {
       if (error) {
         console.error("프로필 저장 중 오류 발생:", error.message);
       } else {
-        console.log("프로필이 성공적으로 저장되었습니다.");
-        alert("완료 되었습니다");
+        toast.success("닉네임 등록이 완료 되었습니다.", {
+          position: "top-center",
+          autoClose: 1500,
+        });
         router.push("/main");
       }
     } catch (error) {
@@ -92,6 +95,7 @@ const SignNickName = () => {
             설정완료
           </button>
         </div>
+        <ToastContainer />
       </div>
     </NickNameLayout>
   );

@@ -83,6 +83,22 @@ function TripEditMap() {
           viewPlanStates
         ) {
           if (selectedAccommodations && selectedPlaces) {
+            const imagePlaceSrc =
+              "https://cdn-icons-png.flaticon.com/512/4249/4249601.png ";
+            const imageAccommondationSrc =
+              "https://cdn-icons-png.flaticon.com/512/4324/4324725.png";
+            const imageSize = new window.kakao.maps.Size(35, 35);
+            const imageOption = { offset: new window.kakao.maps.Point(30, 35) };
+            const markerPlaceImage = new window.kakao.maps.MarkerImage(
+              imagePlaceSrc,
+              imageSize,
+              imageOption,
+            );
+            const markerAccommondationImage = new window.kakao.maps.MarkerImage(
+              imageAccommondationSrc,
+              imageSize,
+              imageOption,
+            );
             for (let i = 0; i < selectedAccommodations.length; i++) {
               const accommodation = selectedAccommodations[i];
               const places = selectedPlaces[i];
@@ -104,6 +120,7 @@ function TripEditMap() {
                         let marker = new window.kakao.maps.Marker({
                           map: map,
                           position: coords || accommodationCoords,
+                          image: markerAccommondationImage,
                         });
                         let infowindow = new window.kakao.maps.InfoWindow({
                           content: `<div style="width:150px;text-align:center;padding:6px 0;">${item.title}</div>`,
@@ -123,13 +140,14 @@ function TripEditMap() {
                           result[0].y,
                           result[0].x,
                         );
-                        let accommodationCoords = new window.kakao.maps.LatLng(
+                        let placeCoords = new window.kakao.maps.LatLng(
                           item.mapy,
                           item.mapx,
                         );
                         let marker = new window.kakao.maps.Marker({
                           map: map,
-                          position: coords || accommodationCoords,
+                          position: coords || placeCoords,
+                          image: markerPlaceImage,
                         });
                         setMapLatLngArray((prevArray) => [
                           ...prevArray,

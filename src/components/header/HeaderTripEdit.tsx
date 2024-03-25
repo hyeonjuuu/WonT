@@ -4,6 +4,7 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 import Router from "next/router";
 
 function HeaderTripEdit() {
+  const router = useRouter();
   return (
     <header className="bg-white-opacity-50 p-5">
       <nav className="flex justify-between gap-3 bg-white-opacity-50">

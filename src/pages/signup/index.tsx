@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import useSignUpStore from "@/store/useSignUpStore";
 import supabase from "@/lib/supabase/supabase";
 import { useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUpPage: React.FC = () => {
   const router = useRouter();
@@ -24,8 +26,18 @@ const SignUpPage: React.FC = () => {
   const handleSignUp = async () => {
     const { email, password, confirmPassword } = signUpStore;
     if (password !== confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다."); // toastify로 바꿀예정
+      toast.error("비밀번호가 일치하지 않습니다", {
+        position: "top-center",
+        autoClose: 1500,
+      });
+      router.push("/");
+
       return;
+    } else {
+      toast.success("회원가입에 성공했습니다.", {
+        position: "top-center",
+        autoClose: 1500,
+      });
     }
 
     try {
@@ -36,14 +48,16 @@ const SignUpPage: React.FC = () => {
       if (error) {
         console.error("회원가입 중 오류가 발생했습니다.", error.message);
       } else {
-        alert("회원가입이 성공했습니다."); // toastify로 바꿀예정
+        toast.success("회원가입이 성공했습니다.", {
+          position: "top-center",
+          autoClose: 1500,
+        });
         router.push("/");
       }
     } catch (error) {
       console.error("회원가입 중 예기치 않은 오류가 발생했습니다.", error);
     }
   };
-
   return (
     <SignUpLayout>
       <div className="pt-[5.25rem] flex flex-col">
@@ -89,6 +103,7 @@ const SignUpPage: React.FC = () => {
           />
           <SignButton text="회원가입" onClick={handleSignUp} />
         </div>
+        <ToastContainer />
       </div>
     </SignUpLayout>
   );

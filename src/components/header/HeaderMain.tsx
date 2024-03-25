@@ -6,13 +6,18 @@ import Image from "next/image";
 import { PiUserCircle } from "react-icons/pi";
 import { MdLogout } from "react-icons/md";
 import supabase from "@/lib/supabase/supabase";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const HeaderMain = () => {
   const logOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (!error) {
+      toast.success("로그아웃에 성공하셨습니다", {
+        position: "top-center",
+        autoClose: 1500,
+      });
       window.location.href = "/";
-      alert("로그아웃에 성공하셨습니다");
+    } else {
     }
   };
 

@@ -14,6 +14,7 @@ const SignInput: React.FC<SignInputProps> = ({
   type,
   value,
   onChange,
+  
 }) => {
   return (
     <div className="pt-[1.5rem] min-w-[18.75rem]  flex flex-col gap-3 border-b-2 border-primary mx-auto pb-[0.313rem]">

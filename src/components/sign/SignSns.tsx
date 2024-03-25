@@ -10,7 +10,6 @@ function SignSns() {
   const handleGoogleSignIn = async () => {
     try {
       const userData = await signInWithGoogle();
-      console.log("로그인이 된거여 ??", userData);
     } catch (error) {
       console.error("Google sign-in error:", error);
     }
@@ -28,14 +27,14 @@ function SignSns() {
   const handleGitHubSignIn = async () => {
     try {
       const userData = await signInWithGitHub();
-      console.log("카카오로 로그인한 사용자 정보:", userData);
+      console.log("깃허브로 로그인한 사용자 정보:", userData);
     } catch (error) {
       console.error("Kakao sign-in error:", error);
     }
   };
 
   return (
-    <div className="flex justify-between w-[280px]">
+    <div className="flex justify-between w-[17.5rem]">
       <button
         type="button"
         className="flex flex-col item-center justify-center gap-3"
