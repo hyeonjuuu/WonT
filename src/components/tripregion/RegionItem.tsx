@@ -1,8 +1,11 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import TourCategoryItem from "@/components/tripregion/TourCategoryItem";
+import supabase from "@/lib/supabase/supabase";
 import { RegionStore } from "@/store/RegionStore";
 import { RegionToggleStore } from "@/store/RegionToggleStore";
+import DataProps from "@/types/DataProps";
 
 type RegionItemProps = {
   regionName: string;
@@ -13,15 +16,14 @@ const RegionItem = ({
   regionName = "지역이름",
   regionCode,
 }: RegionItemProps) => {
-  const { selectedRegionName, setRegionCode, setRegionName, resetRegionName } =
-    RegionStore();
+  const { selectedRegionName, setRegionName, resetRegionName } = RegionStore();
   const { toggleRegionName, setToggleRegionName } = RegionToggleStore();
   const [isToggle, setIsToggle] = useState(false);
   const [isImgError, setIsImgError] = useState<boolean>(false);
+  const [regionData, setRegionData] = useState<DataProps | null>(null);
 
   const selectRegion = () => {
     if (!selectedRegionName) {
-      setRegionCode(regionCode);
       setRegionName(regionName);
     } else {
       setToggleRegionName("");
@@ -29,7 +31,6 @@ const RegionItem = ({
     if (!toggleRegionName) {
       setToggleRegionName(regionName);
     } else {
-      setRegionCode(null);
       resetRegionName();
     }
   };
@@ -39,21 +40,31 @@ const RegionItem = ({
     else setIsToggle(false);
   }, [toggleRegionName, regionName]);
 
-  /*   const handleDefaultImage = () => {
-    return (
-      <div
-        className={`relative w-[8.4375rem] h-[8.4375rem] rounded-xl overflow-hidden bg-[#D0CFD7] object-cover ${isToggle && "shadow-md shadow-gray-400"}`}
-      >
-        <Image
-          src="/svg/regionIcon-selected.svg"
-          width={20.5}
-          height={20}
-          alt="선택한 여행 지역"
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        />
-      </div>
-    );
-  }; */
+  // 지역 상세 정보
+  useEffect(() => {
+    (async () => {
+      if (isToggle) {
+        let { data: region, error } = await supabase
+          .from("local")
+          .select("*")
+          .eq("id", regionCode + 1);
+
+        if (region) {
+          setRegionData(region[0]);
+        }
+        if (error) {
+          toast.info(
+            `지역 정보를 불러오던 중 에러가 발생하였습니다.
+            불편을 드려 죄송합니다.`,
+            {
+              position: "top-center",
+              autoClose: 2500,
+            },
+          );
+        }
+      }
+    })();
+  }, [isToggle, regionCode]);
 
   return (
     <li
@@ -82,14 +93,14 @@ const RegionItem = ({
           {regionName}
         </p>
       </button>
-      {isToggle && (
+      {isToggle && regionData && (
         <section className="w-full mx-auto mt-2 p-3 rounded-xl bg-button shadow-md shadow-gray-400">
           <div className="flex flex-col gap-2 w-full mb-3 px-3 py-4 rounded-xl bg-white text-contentMuted ">
-            <h3 className="text-contentSecondary">지역정보</h3>
-            <p>지역 설명 텍스트입니다.</p>
+            <h3 className="text-content font-semibold">지역정보</h3>
+            <p className="text-contentSecondary">{regionData.info}</p>
           </div>
           <div className="flex flex-col gap-2 w-full px-3 py-4 rounded-xl bg-white text-contentMuted">
-            <h3 className="text-contentSecondary">관광지도</h3>
+            <h3 className="text-content font-semibold">관광지도</h3>
             <p>궁금한 주제를 선택해 보세요.</p>
             <nav className="flex flex-wrap gap-2 mt-3">
               <TourCategoryItem color="bg-[#F2A868]">관광지</TourCategoryItem>
@@ -104,6 +115,7 @@ const RegionItem = ({
           </div>
         </section>
       )}
+      <ToastContainer />
     </li>
   );
 };
