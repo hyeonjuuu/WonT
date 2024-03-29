@@ -1,7 +1,7 @@
 import { AiOutlineHome } from "react-icons/ai";
 import { PiUser } from "react-icons/pi";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 function HeaderTripEdit() {
   const router = useRouter();

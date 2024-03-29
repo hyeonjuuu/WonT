@@ -69,17 +69,13 @@ function MyPlan() {
   }, [regionData, planData]);
 
   const handleRoute = (e: React.MouseEvent, id: number) => {
-    Router.push(`/tripedit/${id}`);
+    Router.push(`/myplan/${id}`);
   };
 
   useEffect(() => {
-    console.log(planData);
-    console.log(planData?.map((planItem) => planItem.trip_date));
     const firstItemFirstDate = planData?.[0]?.trip_date?.at(0);
     const lastItem = planData?.at(-1);
     const lastItemLastDate = lastItem?.trip_date?.at(-1);
-    console.log(firstItemFirstDate);
-    console.log(lastItem);
 
     // console.log(planData?.map((planItem) => planItem.trip_date[0]));
   }, [planData]);

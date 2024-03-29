@@ -9,7 +9,6 @@ interface DetailPlaceProps {
 
 function DetailPlace({ reviewData }: DetailPlaceProps) {
   // const { reviewData, setReviewData } = useReviewStore();
-  console.log(reviewData);
 
   return (
     <div>

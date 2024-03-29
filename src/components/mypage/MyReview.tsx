@@ -25,7 +25,6 @@ function MyReview() {
     };
 
     fetchingReviewData();
-    console.log(review);
   }, [setReview]);
 
   return (
